@@ -1,0 +1,62 @@
+{% extends 'layout.html' %}
+{% block title %}
+{{super()}}
+Calculate
+{% endblock %}
+
+
+{% block header %}
+
+{% endblock %}
+
+{% block main %}
+
+<form action="" method="POST">
+    <div class="control">
+        <input class="input" name="necesario" type="number" required autofocus placeholder="Total de Factura Necesario">
+    </div>
+    <div class="control">
+        <input class="input" name="irpf" type="number" required placeholder="IRPF">
+    </div>
+    <div class="control">
+        <input class="input" name="iva" type="number" required placeholder="IVA">
+    </div>
+    <button type="submit" class="button is-primary">Calcular</button>
+</form>
+
+{% if iva %}
+
+<div class="card">
+    <header class="card-header">
+        <p class="card-header-title">
+            Calculo
+        </p>
+    </header>
+    <div class="card-content">
+        <div class="content">
+            <ul>
+                <h1> <strong>Presupuesto / Subtotal : </strong> {{necesario}} €</h1>
+                <li>
+                    IRPF : {{irpf}} %
+                </li>
+                <li>
+                    IVA : {{irpf}} %
+                </li>
+                <li>
+                    <strong>TOTAL : </strong>€
+                </li>
+                <li>
+                    <strong>Limpio : </strong>{{limpio}} €
+                </li>
+            </ul>
+            <br>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}
+
+{% block footer %}
+
+{% endblock %}
