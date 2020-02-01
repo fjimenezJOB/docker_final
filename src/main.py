@@ -12,24 +12,30 @@ app = Flask(__name__)
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
-        necesario = float(request.form.get('necesario'))
-        form_iva = float(request.form.get('iva'))
-        form_irpf = float(request.form.get('irpf'))
+        # Datos del Formulario
+        form_total = round(float(request.form.get('necesario')), 2)
+        form_iva = round(float(request.form.get('iva')), 2)
+        form_irpf = round(float(request.form.get('irpf')), 2)
 
+        # Calculos intermedios
         cal01 = ((form_iva - form_irpf) /100) +1
-        subtotal = round(necesario / cal01, 2)
+        cal02 = form_total / cal01
+    
+        # Calculos finales
+        irpf = round((cal02 * (form_irpf / 100)), 2)
+        iva = round((cal02 * (form_iva / 100)), 2)
 
-        irpf = round((subtotal * (form_irpf / 100)), 2)
-        iva = round((subtotal * (form_irpf / 100)), 2)
+        subtotal = round(cal02 ,2)
+        limpio = round(form_total - iva,2)
 
-        limpio = round((necesario - iva),2)
         context = {
-            'necesario': necesario,
+            'necesario': form_total,
             'iva':iva,
             'subtotal':subtotal,
             'limpio' : limpio,
             'irpf':irpf
         }
+
         return render_template('index.html', **context)
     return render_template('index.html')
 
